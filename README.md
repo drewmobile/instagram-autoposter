@@ -1,3 +1,5 @@
+
+
 # Instagram AutoPoster – Reviewer Instructions
 
 ## 🔍 Use Case Overview
@@ -8,9 +10,15 @@ This app is a Python CLI tool that automates the posting of short-form video con
 
 ## 👩‍💻 Test Instructions (Manual Testing of API Flow)
 
-Although the app runs via cron automation in production, reviewers can manually test the full Instagram posting workflow as follows:
+Although the app runs via cron automation in production, reviewers can manually test the full Instagram posting workflow using any of the provided scripts:
 
-### 1. Clone the Repository
+---
+
+### 🧪 Option 1: One-Time Test with `test_post.py`
+
+This script posts a **single known test video** to validate credentials and permissions.
+
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/blockvest/instagram-autoposter.git
@@ -33,29 +41,69 @@ REGION=us-east-1
 AWS_PROFILE=instagram-poster
 TEST_VIDEO_KEY=Animation Reels by The Digital Era page (314).mp4
 
-4. Run the One-Time Test Script
+4. Run the Test Script
 
 python test_post.py
 
-This script will:
-
-    Generate a pre-signed S3 video URL
-
-    Upload the video via /media
-
-    Poll /media for FINISHED status
-
-    Call /media_publish to post to the feed
-
 5. Expected Result
 
-A successful Instagram post should appear on the linked business account. The script will log each API step, including status and errors (if any).
+    Script generates a pre-signed S3 video URL
+
+    Uploads to Instagram via /media
+
+    Polls for processing status
+
+    Publishes to Instagram feed using /media_publish
+
+    Output is printed in terminal
+
+🔁 Option 2: Automated Posting with instpost.py
+
+This script is designed to automatically post one unposted video at a time from the S3 bucket.
+Run the Main Script
+
+python instpost.py
+
+Expected Result
+
+    Scans drews-instagram-bucket for unposted videos
+
+    Selects one at random
+
+    Posts to Instagram using the same API steps
+
+    Logs output and marks video as posted
+
+    Intended to run via scheduled cron job
+
+✔️ Option 3: Verification Post with verify_instagram_post.py
+
+This script is used to verify posting capability using a known small video, uploaded as a REEL.
+Run the Script
+
+python verify_instagram_post.py
+
+What It Does
+
+    Uses a hardcoded test video:
+    Animation Reels by The Digital Era page (314).mp4
+
+    Generates a pre-signed S3 URL
+
+    Uploads video to /media with media_type=REELS
+
+    Polls the media container until status_code = FINISHED
+
+    Publishes to feed via /media_publish
+
+    Logs each step of the process and prints any errors
+
 📌 Additional Notes
 
-    This tool is used only internally by our brand.
+    This tool is used only internally by our brand
 
-    It does not collect, store, or process user data.
+    It does not collect, store, or process user data
 
-    All video content is owned and created by us.
+    All video content is created and owned by us
 
-    No third-party or public users interact with the tool.
+    No public or third-party users interact with this system
