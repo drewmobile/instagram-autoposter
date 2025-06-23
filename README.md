@@ -1,109 +1,92 @@
+✅ Complete README.md Structure
 
-
-# Instagram AutoPoster – Reviewer Instructions
+# 📸 Instagram AutoPoster – Internal CLI Tool
 
 ## 🔍 Use Case Overview
 
-This app is a Python CLI tool that automates the posting of short-form video content to our business's Instagram account. It runs on a private server via scheduled cron jobs and uses the Instagram Graph API to upload videos stored in a secure AWS S3 bucket. This is an internal tool used only by our brand.
+This is an internal Python CLI application that automates posting short-form videos (Reels) to our business's Instagram account. It runs on a private server via cron jobs and uses the Instagram Graph API and AWS S3 for storage.
+
+This tool is **used only by our business**. It does **not** involve any public users, user authentication, or data collection.
 
 ---
 
-## 👩‍💻 Test Instructions (Manual Testing of API Flow)
+## 🛠️ Environment Configuration
 
-Although the app runs via cron automation in production, reviewers can manually test the full Instagram posting workflow using any of the provided scripts:
+Copy `.env.example` to `.env` and provide your credentials:
 
----
+```env
+ACCESS_TOKEN=your_instagram_access_token
+IG_USER_ID=your_instagram_user_id
+AWS_PROFILE=your_aws_cli_profile
+S3_BUCKET=your_s3_bucket_name
+REGION=your_aws_region
+TEST_VIDEO_KEY=Animation Reels by The Digital Era page (314).mp4
 
-### 🧪 Option 1: One-Time Test with `test_post.py`
+📦 Installation Instructions
 
-This script posts a **single known test video** to validate credentials and permissions.
-
-#### 1. Clone the Repository
-
-```bash
-git clone https://github.com/blockvest/instagram-autoposter.git
+git clone https://github.com/drewmobile/instagram-autoposter.git
 cd instagram-autoposter
-
-2. Create and Activate a Python Virtual Environment
 
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env
+# Then edit `.env` with real values
 
-3. Create a .env File
+🧪 Test the Integration (Manual Reviewer Test)
 
-Provide valid access token and environment configuration:
+    These scripts are for reviewer validation and debugging.
 
-ACCESS_TOKEN=IG...your long-lived Instagram token
-IG_USER_ID=1784...your Instagram user ID
-S3_BUCKET=drews-instagram-bucket
-REGION=us-east-1
-AWS_PROFILE=instagram-poster
-TEST_VIDEO_KEY=Animation Reels by The Digital Era page (314).mp4
-
-4. Run the Test Script
-
-python test_post.py
-
-5. Expected Result
-
-    Script generates a pre-signed S3 video URL
-
-    Uploads to Instagram via /media
-
-    Polls for processing status
-
-    Publishes to Instagram feed using /media_publish
-
-    Output is printed in terminal
-
-🔁 Option 2: Automated Posting with instpost.py
-
-This script is designed to automatically post one unposted video at a time from the S3 bucket.
-Run the Main Script
-
-python instpost.py
-
-Expected Result
-
-    Scans drews-instagram-bucket for unposted videos
-
-    Selects one at random
-
-    Posts to Instagram using the same API steps
-
-    Logs output and marks video as posted
-
-    Intended to run via scheduled cron job
-
-✔️ Option 3: Verification Post with verify_instagram_post.py
-
-This script is used to verify posting capability using a known small video, uploaded as a REEL.
-Run the Script
+✅ verify_instagram_post.py
 
 python verify_instagram_post.py
 
-What It Does
-
-    Uses a hardcoded test video:
-    Animation Reels by The Digital Era page (314).mp4
+This script:
 
     Generates a pre-signed S3 URL
 
-    Uploads video to /media with media_type=REELS
+    Uploads a video to /media as a Reel
 
-    Polls the media container until status_code = FINISHED
+    Polls /media for status
 
-    Publishes to feed via /media_publish
+    Publishes the Reel via /media_publish
 
-    Logs each step of the process and prints any errors
+✅ A successful Instagram Reel will appear in the connected business account.
+✅ test_post.py
 
-📌 Additional Notes
+This is a simplified one-time test script. It performs the same API flow as above using the test video key defined in your .env.
 
-    This tool is used only internally by our brand
+python test_post.py
 
-    It does not collect, store, or process user data
+🔐 Data Handling
 
-    All video content is created and owned by us
+    No user data is collected, stored, or shared.
 
-    No public or third-party users interact with this system
+    All video content is owned by our business.
+
+    There are no frontend components or third-party user interactions.
+
+🔗 Reviewer Access
+
+This repo is publicly available at:
+
+https://github.com/drewmobile/instagram-autoposter
+
+Please use the .env.example, install instructions, and the test scripts (verify_instagram_post.py, test_post.py) to validate API permission usage.
+
+
+---
+
+### ✅ Recap: What You Need
+
+| File                     | Purpose                                       |
+|--------------------------|-----------------------------------------------|
+| `README.md`              | Reviewer instructions & setup                 |
+| `.env.example`           | Shows expected environment variables          |
+| `verify_instagram_post.py` | Demonstrates Instagram Reels upload flow     |
+| `test_post.py`           | One-time simplified API test                  |
+| `requirements.txt`       | Lists `boto3`, `requests`, `python-dotenv`    |
+
+Once these are in place and pushed to your **public GitHub**, you’re fully prepared to submit your **App Review**.
+
+Want me to generate the actual markdown files or commit structure?
