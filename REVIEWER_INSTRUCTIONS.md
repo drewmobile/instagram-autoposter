@@ -36,10 +36,10 @@ Provide valid access token and environment configuration:
 
 ACCESS_TOKEN=IG...your long-lived Instagram token
 IG_USER_ID=1784...your Instagram user ID
-S3_BUCKET=drews-instagram-bucket
-REGION=us-east-1
-AWS_PROFILE=instagram-poster
-TEST_VIDEO_KEY=Animation Reels by The Digital Era page (314).mp4
+S3_BUCKET=insert-bucket-name-here
+REGION=insert-region-name-here
+AWS_PROFILE=insert-aws-cli-profile-name-here
+TEST_VIDEO_KEY=insert-video-name-here.mp4
 
 4. Run the Test Script
 
