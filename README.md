@@ -87,6 +87,3 @@ Please use the .env.example, install instructions, and the test scripts (verify_
 | `test_post.py`           | One-time simplified API test                  |
 | `requirements.txt`       | Lists `boto3`, `requests`, `python-dotenv`    |
 
-Once these are in place and pushed to your **public GitHub**, you’re fully prepared to submit your **App Review**.
-
-Want me to generate the actual markdown files or commit structure?
